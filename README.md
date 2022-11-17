@@ -1,5 +1,5 @@
 # Term1
->Please load data from [f1_dataset.sql](https://github.com/kripken/sql.js/) after creating and. using schema term_1
+>Please load data from [f1_dataset.sql](https://github.com/tingchunyin/Term1/blob/main/f1_database.sql) after creating and. using schema term_1
 
 
 ## Create Schema
@@ -10,7 +10,7 @@ create schema term_1;
 use term_1;
 ```
 
-## LOAD DATA FROM [f1_dataset.sql](https://github.com/kripken/sql.js/) (PLAN B)
+## LOAD DATA FROM [f1_dataset.sql](https://github.com/tingchunyin/Term1/blob/main/f1_database.sql) (PLAN B)
 
 Lets have a look what we have got in the data base
 ```sql

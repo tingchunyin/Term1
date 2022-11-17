@@ -73,6 +73,7 @@ Limit 10;
 select * from top_ten_most_points;
 ```
 We can see that Lewis Hamilton is the highest scoring driver since 1950, however we can see Michael Schumacher is only on the 8th place
+
 It is a bit strange as he is one of the greatest f1 driver ever.
 
 Lets see how many wins did Michael Schumacher and Lewis Hamilton had comparing to other drivers.
@@ -91,6 +92,7 @@ limit 10;
 select * from top_ten_most_wins;
 ```
 From the results we can see that Michael Schumacher has the 2nd most wins since 1950, and racers like Alain Prost and Ayrton Senna is not even on the top 10 in terms of scores.
+
 So we assume that the Points System in Michael Schumacher's era is different from Lewis Hamiltons.
 
 Lets find out from a random race in 2001 and 2020! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
@@ -122,7 +124,9 @@ where r.race_id = 1031;
 select * from 2020_points_system;
 ```
 From the views we can see that winning a race in 2001 only counted for 10 points, and only the top 6 finishers got points. 
+
 While in 2020, top 10 finishers get points and the winner get 25 points.
+
 So we can say our assumption about the difference in points system is true, and that is the reason why Schumacher has the 2nd most wins, but only on the 8th place in terms of points.
 
 ## Creating procedures
@@ -194,7 +198,9 @@ Let's see how many race wins of Albon has since 1950
 ```sql
 call GetNumOfWins_driver('Albon');
 ```
-We can see that Albon has 0 wins in his career yet, but lets assume he got a win in a random race. Lets create a trigger when a new race win is added for Albon.
+We can see that Albon has 0 wins in his career yet, but lets assume he got a win in a random race. 
+
+Lets create a trigger when a new race win is added for Albon.
 
 Now we create empty table for trigger log.
 ```sql
@@ -292,6 +298,7 @@ select * from fastest_track_2021;
 We can see that in 2021, the Italian Grand Prix has the highest average race speed, but we would also like to see if the speed of racecars has increase since 1950.
 
 Lets investigate on the change of average speed of racecars in the Italian Grand Prix since the earliest available record on the dataset
+
 We assume that with technological improvement and fuel efficiency, modern F1 cars are faster than the cars in the past.
 ```sql
 drop view if exists avg_car_speed;
@@ -308,7 +315,9 @@ order by speed desc;
 select * from avg_car_speed;
 ```
 Seems that our assumption is wrong, as results show that cars from the 2000s are generally faster than the cars in the 2010s.
-I did some research online, and the reason of a slower speed in modern cars is due to the safety regulations, heavier cars, hybrid engines and using biofuels.
 
+So I did some research online, and the reason of a slower speed in modern cars is due to the safety regulations, heavier cars, hybrid engines and using biofuels.
 
+# Brief Summary
+From the above codes, we can answer our analytics questions, by creating views, stored procedures, triggers and testing the functionality of each of the codes.
 

@@ -63,7 +63,7 @@ select * from top_ten_most_wins;
 -- From the results we can see that Michael Schumacher has the 2nd most wins since 1950, and racers like Alain Prost and Ayrton Senna is not even on the top 10 in terms of scores.
 -- So we assume that the Points System in Michael Schumacher's era is different from Lewis Hamiltons.
 
--- Lets find out! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
+-- Lets find out from a random race in 2001 and 2020! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
 drop view if exists 2020_points_system;
 
 create view 2020_points_system as
@@ -86,7 +86,7 @@ select * from 2001_points_system;
 select * from 2020_points_system;
 -- From the views we can see that winning a race in 2001 only counted for 10 points, and only the top 6 finishers got points. 
 -- While in 2020, top 10 finishers get points and the winner get 25 points.
--- So we can say our assumption about the difference in points system is true, and that is the reason why MSC has the 2nd most wins, but only on the 8th place in terms of points.
+-- So we can say our assumption about the difference in points system is true, and that is the reason why Schumacher has the 2nd most wins, but only on the 8th place in terms of points.
 
 -- Let's see how many races had a specific constructor won since 1950 by using stored procedure after left joining 2 tables
 DROP PROCEDURE IF EXISTS GetNumOfWins_constructors;
@@ -108,10 +108,10 @@ DELIMITER ;
 -- Race Wins of Mercedes since 1950
 call GetNumOfWins_constructors('Mercedes');
 
--- Race Wins of Ferrari since 1950
+-- TESTING PROCEDURE: Race Wins of Ferrari since 1950
 call GetNumOfWins_constructors('Ferrari');
 
--- Race Wins of Red Bull since 1950
+-- TESTING PROCEDURE: Race Wins of Red Bull since 1950
 call GetNumOfWins_constructors('Red Bull');
 
 
@@ -132,8 +132,11 @@ where d.driver_surname = driverName;
 END //
 DELIMITER ;
 
--- Race Wins of Hamilton since 1950
+-- TESTING PROCEDURE: Race Wins of Hamilton since 1950
 call GetNumOfWins_driver('Hamilton');
+
+-- TESTING PROCEDURE: Race Wins of Verstappen (2022 world champion) since 1950
+call GetNumOfWins_driver('Verstappen');
 
 -- Race Wins of Albon since 1950
 call GetNumOfWins_driver('Albon');
@@ -181,7 +184,7 @@ WHERE
     driver_id = 848 and 
     race_id = 1086;
     
--- Lets also add another race win for Albon in Race 1085
+-- TESTING THE TRIGGER: Lets also add another race win for Albon in Race 1085
 UPDATE race_results
 SET 
     race_position = 1

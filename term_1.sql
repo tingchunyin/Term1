@@ -5,7 +5,7 @@ DROP SCHEMA IF EXISTS term_1;
 create schema term_1;
 use term_1;
 
--- Load data from f1_database.sql
+-- LOAD DATA FROM f1_database.sql (PLAN B)
 
 -- Lets have a look what we have got in the data base
 show tables;

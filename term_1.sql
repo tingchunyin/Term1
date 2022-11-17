@@ -30,6 +30,7 @@ order by year desc;
 select * from distinct_years;
 -- We can see that the database contains ALL the race data since 1950 and until 2022
 
+-- Data Marts
 -- Lets have a look at the top 10 drivers who have the most points since 1950
 drop view if exists top_ten_most_points;
 
@@ -194,5 +195,22 @@ select * from race_results_add;
 -- Lets see how many wins does Albon now have (should have 2 wins)
 call GetNumOfWins_driver('Albon');
 
--- After updating, we can see Albon now have 1 win in total and the update is being recorded in the table race_results_add by a trigger.
+-- After updating, we can see Albon now has 1 win in total and the update is being recorded in the table race_results_add by a trigger.
 
+-- More Data Marts regarding specific racetracks
+-- After looking at the performance of specific drivers and constructors, we would also like to know which circuits have the highest average speed in 2021, so wee can tune the cars accordingly (using 2021 racecar specs).
+drop view if exists fastest_track_2021;
+
+create view fastest_track_2021 as
+select r.race_id, r.year, r.circuit_id, r.circuit_name, round(avg(rr.race_fastest_lap_speed),2)as speed
+from race_results rr
+INNER JOIN races r
+ON rr.race_id = r.race_id
+where r.year = 2021 and rr.race_fastest_lap_speed is not null
+group by r.race_id
+order by speed desc;
+
+select * from fastest_track_2021;
+-- We can see that in 2021, the Italian Grand Prix has the highest average race speed, but we would also like to see if the speed of racecars has increase since 1950.
+
+-- Lets investigate on the change of average speed of racecars since 1950 (since the earliest record on the dataset)

@@ -13,12 +13,16 @@ show tables;
 -- We can see that there are 6 tables, which are constructors, drivers, drivers_standings, qualifying, race_results and races.
 
 -- Lets look at the range of time of races recorded in this database
+drop view if exists range_of_times;
+
 create view range_of_time as
 select min(year) as Earliest_race, max(year) as Latest_race
 from races;
 
 select * from range_of_time;
 -- check if there are missing years from 1950-2022
+drop view if exists distinct_years;
+
 create view distinct_years as
 select distinct year from races
 order by year desc;
@@ -27,6 +31,8 @@ select * from distinct_years;
 -- We can see that the database contains ALL the race data since 1950 and until 2022
 
 -- Lets have a look at the top 10 drivers who have the most points since 1950
+drop view if exists top_ten_most_points;
+
 create view top_ten_most_points as
 select d.driver_id, d.driver_code, d.driver_forename, d.driver_surname, round(sum(ds.driver_points),0) as Total_points
 from drivers_standings ds
@@ -41,6 +47,8 @@ select * from top_ten_most_points;
 -- It is a bit strange as he is one of the greatest f1 driver ever.
 
 -- Lets see how many wins did Michael Schumacher and Lewis Hamilton had comparing to other drivers.
+drop view if exists top_ten_most_wins;
+
 create view top_ten_most_wins as
 select d.driver_id, d. driver_code, d.driver_forename, d.driver_surname, sum(r.race_position = 1) as wins
 from race_results r
@@ -55,12 +63,16 @@ select * from top_ten_most_wins;
 -- So we assume that the Points System in Michael Schumacher's era is different from Lewis Hamiltons.
 
 -- Lets find out! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
+drop view if exists 2020_points_system;
+
 create view 2020_points_system as
 select r.year, rr.race_position,round(rr.race_points,0) as race_points
 from race_results rr
 left join races r
 using (race_id)
 where r.race_id = 1031;
+
+drop view if exists 2001_points_system;
 
 create view 2001_points_system as
 select r.year, rr.race_position,round(rr.race_points,0) as race_points
@@ -175,3 +187,4 @@ select * from race_results_add;
 call GetNumOfWins_driver('Albon');
 
 -- After updating, we can see Albon now have 1 win in total and the update is being recorded in the table race_results_add by a trigger.
+

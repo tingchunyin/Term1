@@ -101,3 +101,77 @@ call GetNumOfWins_constructors('Ferrari');
 -- Race Wins of Red Bull since 1950
 call GetNumOfWins_constructors('Red Bull');
 
+
+-- Create Procedure for getting dirvers number of wins since 1950
+DROP PROCEDURE IF EXISTS GetNumOfWins_driver;
+
+DELIMITER //
+
+CREATE PROCEDURE GetNumOfWins_driver(
+	IN driverName VARCHAR(100)
+)
+BEGIN
+select sum(rr.race_position = 1) as wins
+from drivers d
+left join race_results rr
+ON rr.driver_id = d.driver_id
+where d.driver_surname = driverName;
+END //
+DELIMITER ;
+
+-- Race Wins of Hamilton since 1950
+call GetNumOfWins_driver('Hamilton');
+
+-- Race Wins of Albon since 1950
+call GetNumOfWins_driver('Albon');
+
+
+-- We can see that Albon has 0 wins in his career yet, but lets assume he got a win in a random race. Lets create a trigger when a new race win is added for Albon.
+-- Create empty table for trigger log.
+drop table if exists race_results_add;
+
+CREATE TABLE race_results_add (
+    add_id INT AUTO_INCREMENT PRIMARY KEY,
+    driver_id INT NOT NULL,
+    wins INT NOT NULL,
+    changedate date,
+    action VARCHAR(50) DEFAULT NULL
+);
+
+-- Creating the trigger
+drop trigger if exists after_race_result_update ;
+
+CREATE TRIGGER after_race_result_update 
+    AFTER UPDATE ON race_results
+    FOR EACH ROW 
+ INSERT INTO race_results_add
+ SET action = 'update',
+     driver_id = OLD.driver_id,
+     wins = NEW.race_position,
+     changedate = NOW();
+
+show triggers;
+
+-- Get driver_id of Albon
+select driver_id from drivers where driver_surname = 'Albon';
+-- Get a random race_id to update where Albon had raced in
+select race_id from race_results where driver_id = 848;
+
+-- Turn off safe mode
+SET SQL_SAFE_UPDATES = 0;
+
+-- Adding a win for Albon (driver_id : 848), in race_id 1086
+UPDATE race_results
+SET 
+    race_position = 1
+WHERE
+    driver_id = 848 and 
+    race_id = 1086;
+    
+-- Lets look at the log of the update trigger
+select * from race_results_add;
+
+-- Lets see how many wins does Albon now have
+call GetNumOfWins_driver('Albon');
+
+-- After updating, we can see Albon now have 1 win in total and the update is being recorded in the table race_results_add by a trigger.

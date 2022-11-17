@@ -13,7 +13,7 @@ show tables;
 -- We can see that there are 6 tables, which are constructors, drivers, drivers_standings, qualifying, race_results and races.
 
 -- Lets look at the range of time of races recorded in this database
-drop view if exists range_of_times;
+drop view if exists range_of_time;
 
 create view range_of_time as
 select min(year) as Earliest_race, max(year) as Latest_race
@@ -145,7 +145,7 @@ drop table if exists race_results_add;
 CREATE TABLE race_results_add (
     add_id INT AUTO_INCREMENT PRIMARY KEY,
     driver_id INT NOT NULL,
-    wins INT NOT NULL,
+    new_wins INT NOT NULL,
     changedate date,
     action VARCHAR(50) DEFAULT NULL
 );
@@ -159,7 +159,7 @@ CREATE TRIGGER after_race_result_update
  INSERT INTO race_results_add
  SET action = 'update',
      driver_id = OLD.driver_id,
-     wins = NEW.race_position,
+     new_wins = NEW.race_position,
      changedate = NOW();
 
 show triggers;
@@ -180,10 +180,18 @@ WHERE
     driver_id = 848 and 
     race_id = 1086;
     
--- Lets look at the log of the update trigger
+-- Lets also add another race win for Albon in Race 1085
+UPDATE race_results
+SET 
+    race_position = 1
+WHERE
+    driver_id = 848 and 
+    race_id = 1085;
+    
+-- Lets look at the log of the update trigger (should contain 2 records)
 select * from race_results_add;
 
--- Lets see how many wins does Albon now have
+-- Lets see how many wins does Albon now have (should have 2 wins)
 call GetNumOfWins_driver('Albon');
 
 -- After updating, we can see Albon now have 1 win in total and the update is being recorded in the table race_results_add by a trigger.

@@ -294,7 +294,7 @@ Lets see how many wins does Albon now have (should have 2 wins)
 call GetNumOfWins_driver('Albon');
 ```
 
-After updating, we can see Albon now has 1 win in total and the update is being recorded in the table race_results_add by a trigger.
+After updating, we can see Albon now has 2 wins in total and the update is being recorded in the table race_results_add by a trigger.
 
 
 ## More Data Marts regarding specific racetracks

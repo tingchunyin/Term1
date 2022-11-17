@@ -65,6 +65,7 @@ select * from top_ten_most_wins;
 
 -- Lets find out from a random race in 2001 and 2020! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
 drop view if exists 2020_points_system;
+drop view if exists 2001_points_system;
 
 create view 2020_points_system as
 select r.year, rr.race_position,round(rr.race_points,0) as race_points
@@ -72,8 +73,6 @@ from race_results rr
 left join races r
 using (race_id)
 where r.race_id = 1031;
-
-drop view if exists 2001_points_system;
 
 create view 2001_points_system as
 select r.year, rr.race_position,round(rr.race_points,0) as race_points

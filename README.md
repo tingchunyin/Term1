@@ -1,6 +1,14 @@
 # Term1
 >Please load data from [f1_dataset.sql](https://github.com/tingchunyin/Term1/blob/main/f1_database.sql) after creating and. using schema term_1
 
+## Analytics Questions
+> We would like to know who has the most race wins or points
+> If there is a difference while comparing modern points system with the past
+> We would like to know the number of wins of specific constructors (by creating procedure)
+> We would like to know the number of wins of specific drivers
+> Creating a trigger which will log the future updates to the table to prevent data inaccuracy
+> Getting insights on how to tune the car according to the race track's average racing speed
+> See if modern race cars or race cars in the past are faster in general
 
 ## Create Schema
 ```sql
@@ -11,6 +19,7 @@ use term_1;
 ```
 
 ## LOAD DATA FROM [f1_dataset.sql](https://github.com/tingchunyin/Term1/blob/main/f1_database.sql) (PLAN B)
+>!!!Please download the file from the link above and run the whole sql script before going to the next step!!!
 
 Lets have a look what we have got in the data base
 ```sql
@@ -79,16 +88,10 @@ From the results we can see that Michael Schumacher has the 2nd most wins since 
 So we assume that the Points System in Michael Schumacher's era is different from Lewis Hamiltons.
 
 Lets find out from a random race in 2001 and 2020! (MSC's Prime is in 2001, while HAM's Prime is in 2020)
-```sql
-drop view if exists 2020_points_system;
-drop view if exists 2001_points_system;
 
-create view 2020_points_system as
-select r.year, rr.race_position,round(rr.race_points,0) as race_points
-from race_results rr
-left join races r
-using (race_id)
-where r.race_id = 1031;
+Points system in 2001
+```sql
+drop view if exists 2001_points_system;
 
 create view 2001_points_system as
 select r.year, rr.race_position,round(rr.race_points,0) as race_points
@@ -98,6 +101,18 @@ using (race_id)
 where r.race_id = 141;
 
 select * from 2001_points_system;
+```
+Points system in 2001
+```sql
+drop view if exists 2020_points_system;
+
+create view 2020_points_system as
+select r.year, rr.race_position,round(rr.race_points,0) as race_points
+from race_results rr
+left join races r
+using (race_id)
+where r.race_id = 1031;
+
 select * from 2020_points_system;
 ```
 From the views we can see that winning a race in 2001 only counted for 10 points, and only the top 6 finishers got points. 
@@ -138,6 +153,7 @@ Race Wins of Red Bull since 1950
 ```sql
 call GetNumOfWins_constructors('Red Bull');
 ```
+
 Create Procedure for getting dirvers number of wins since 1950
 ```sql
 DROP PROCEDURE IF EXISTS GetNumOfWins_driver;

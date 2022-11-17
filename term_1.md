@@ -36,6 +36,10 @@ show tables;
 
 We can see that there are 6 tables, which are constructors, drivers, drivers_standings, qualifying, race_results and races.
 
+Lets look at the ERR Diagram and the relationship among tables
+<img width="789" alt="image" src="https://user-images.githubusercontent.com/113610914/202583808-9483a5a0-d013-493d-907c-497ae4c4d16a.png">
+
+
 Lets look at the range of time of races recorded in this database
 ```sql
 drop view if exists range_of_time;

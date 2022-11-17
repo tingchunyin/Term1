@@ -213,4 +213,22 @@ order by speed desc;
 select * from fastest_track_2021;
 -- We can see that in 2021, the Italian Grand Prix has the highest average race speed, but we would also like to see if the speed of racecars has increase since 1950.
 
--- Lets investigate on the change of average speed of racecars since 1950 (since the earliest record on the dataset)
+-- Lets investigate on the change of average speed of racecars in the Italian Grand Prix since the earliest available record on the dataset
+-- We assume that with technological improvement and fuel efficiency, modern F1 cars are faster than the cars in the past.
+drop view if exists avg_car_speed;
+
+create view avg_car_speed as
+select r.year, r.circuit_name, round(avg(rr.race_fastest_lap_speed),2)as speed
+from race_results rr
+INNER JOIN races r
+ON rr.race_id = r.race_id
+where r.circuit_name = "Italian Grand Prix"  and rr.race_fastest_lap_speed is not null
+group by r.race_id
+order by speed desc;
+
+select * from avg_car_speed;
+-- Seems that our assumption is wrong, as results show that cars from the 2000s are generally faster than the cars in the 2010s.
+-- I did some research online, and the reason of a slower speed in modern cars is due to the safety regulations, heavier cars, hybrid engines and using biofuels.
+
+
+

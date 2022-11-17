@@ -2,19 +2,19 @@
 >Please load data from [f1_dataset.sql](https://github.com/tingchunyin/Term1/blob/main/f1_database.sql) after creating and. using schema term_1
 
 ## Analytics Questions
-> We would like to know who has the most race wins or points
-> 
-> If there is a difference while comparing modern points system with the past
-> 
-> We would like to know the number of wins of specific constructors (by creating procedure)
-> 
-> We would like to know the number of wins of specific drivers
-> 
-> Creating a trigger which will log the future updates to the table to prevent data inaccuracy
-> 
-> Getting insights on how to tune the car according to the race track's average racing speed
-> 
-> See if modern race cars or race cars in the past are faster in general
+We would like to know who has the most race wins or points
+ 
+If there is a difference while comparing modern points system with the past
+ 
+We would like to know the number of wins of specific constructors (by creating procedure)
+ 
+We would like to know the number of wins of specific drivers
+ 
+Creating a trigger which will log the future updates to the table to prevent data inaccuracy
+ 
+Getting insights on how to tune the car according to the race track's average racing speed
+ 
+See if modern race cars or race cars in the past are faster in general
 
 ## Create Schema
 ```sql
